@@ -219,6 +219,11 @@
                 margin-top: 0.5rem;
             }
         }
+
+        /* Hidden row style */
+        .hidden-row {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
@@ -231,7 +236,7 @@
             
             <div class="search-bar">
                 <i class="fas fa-search"></i>
-                <input type="text" placeholder="Search reports...">
+                <input type="text" id="searchInput" placeholder="Search reports..." oninput="filterReports()">
             </div>
         </div>
         
@@ -245,7 +250,7 @@
             </div>
             
             <!-- Row 1 -->
-            <div class="table-row">
+            <div class="table-row" data-search="001 Monthly Sales Performance Sales Analytics">
                 <div class="serial-no">#001</div>
                 <div class="report-name">
                     Monthly Sales Performance
@@ -265,7 +270,7 @@
             </div>
             
             <!-- Row 2 -->
-            <div class="table-row">
+            <div class="table-row" data-search="002 Customer Satisfaction Survey Customer Insights">
                 <div class="serial-no">#002</div>
                 <div class="report-name">
                     Customer Satisfaction Survey
@@ -285,7 +290,7 @@
             </div>
             
             <!-- Row 3 -->
-            <div class="table-row">
+            <div class="table-row" data-search="003 Inventory Status Report Operations">
                 <div class="serial-no">#003</div>
                 <div class="report-name">
                     Inventory Status Report
@@ -305,7 +310,7 @@
             </div>
             
             <!-- Row 4 -->
-            <div class="table-row">
+            <div class="table-row" data-search="004 Employee Performance Metrics HR Analytics">
                 <div class="serial-no">#004</div>
                 <div class="report-name">
                     Employee Performance Metrics
@@ -342,6 +347,21 @@
         function redirectTo(reportId) {
             // In a real application, this would redirect to the actual report
             window.location.href = `https://analytics.example.com/reports/${reportId}`;
+        }
+
+        function filterReports() {
+            const searchInput = document.getElementById('searchInput');
+            const searchTerm = searchInput.value.toLowerCase();
+            const rows = document.querySelectorAll('.table-row');
+            
+            rows.forEach(row => {
+                const searchData = row.getAttribute('data-search').toLowerCase();
+                if (searchData.includes(searchTerm)) {
+                    row.classList.remove('hidden-row');
+                } else {
+                    row.classList.add('hidden-row');
+                }
+            });
         }
     </script>
 </body>
